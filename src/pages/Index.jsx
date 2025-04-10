@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { ArrowRight, Search, FileText, MessageSquare, Calendar } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -23,48 +24,100 @@ const Index = () => {
     visible: { 
       opacity: 1,
       transition: { 
-        staggerChildren: 0.1,
+        staggerChildren: 0.12,
         delayChildren: 0.3
       }
     }
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.5 }
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
   const letterVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 50, opacity: 0 },
     visible: (i) => ({
       y: 0,
       opacity: 1,
       transition: {
-        delay: i * 0.1,
-        duration: 0.5
+        delay: i * 0.12,
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1]
       }
     })
   };
 
+  const featuresData = [
+    {
+      title: "Candidate Search",
+      description: "Find perfect candidates across all job platforms",
+      icon: <Search className="w-6 h-6" />,
+      delay: 0.2
+    },
+    {
+      title: "Resume Screening",
+      description: "Upload and analyze resumes for job matching",
+      icon: <FileText className="w-6 h-6" />,
+      delay: 0.3
+    },
+    {
+      title: "AI Assistant",
+      description: "Chat with our AI to analyze candidate data",
+      icon: <MessageSquare className="w-6 h-6" />,
+      delay: 0.4
+    },
+    {
+      title: "Scheduling",
+      description: "Automate interview scheduling and emails",
+      icon: <Calendar className="w-6 h-6" />,
+      delay: 0.5
+    }
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="w-full p-4 flex justify-end">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-background/90 dark:from-background dark:to-background/80">
+      <header className="w-full p-6 flex justify-between items-center z-10">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-xl font-bold text-gradient animate-text-shimmer bg-gradient-to-r from-raya-purple via-indigo-500 to-purple-300 bg-[length:200%_auto]"
+        >
+          RAYA
+        </motion.div>
         <ThemeToggle />
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-4">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 pb-24 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.07 }}
+            transition={{ duration: 2, delay: 0.5 }}
+            className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-raya-purple blur-[120px]" 
+          />
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.05 }}
+            transition={{ duration: 2, delay: 0.7 }}
+            className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-indigo-400 blur-[140px]" 
+          />
+        </div>
+        
         <motion.div 
-          className="text-center"
+          className="text-center relative z-10 max-w-5xl"
           initial="hidden"
           animate={loaded ? "visible" : "hidden"}
           variants={containerVariants}
         >
           <motion.div 
-            className="mb-6 flex justify-center"
+            className="mb-12 flex justify-center"
             variants={itemVariants}
           >
             <div className="flex items-center">
@@ -82,32 +135,57 @@ const Index = () => {
           </motion.div>
 
           <motion.h2 
-            className="text-xl md:text-2xl mb-8 text-muted-foreground"
+            className="text-xl md:text-3xl mb-8 text-foreground font-light tracking-wide"
             variants={itemVariants}
           >
             Your AI-powered HR Assistant
           </motion.h2>
 
           <motion.div 
-            className="max-w-md mx-auto mb-12 text-muted-foreground"
+            className="max-w-2xl mx-auto mb-16 text-muted-foreground text-lg"
             variants={itemVariants}
           >
-            <p>Effortlessly find the perfect candidates for any position across all job platforms</p>
+            <p>Transforming recruitment with cutting-edge AI technology</p>
           </motion.div>
 
-          <motion.div variants={itemVariants}>
+          <motion.div 
+            variants={itemVariants}
+            className="mb-20"
+          >
             <Button 
               onClick={handleGetStarted} 
               size="lg" 
-              className="bg-raya-purple hover:bg-raya-purple/90 text-white px-8 py-6 rounded-full"
+              className="bg-raya-purple hover:bg-raya-purple/90 text-white px-10 py-7 rounded-full text-lg group transition-all duration-300 ease-in-out"
             >
-              Get Started
+              <span>Get Started</span>
+              <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Button>
+          </motion.div>
+
+          <motion.div 
+            variants={itemVariants}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
+          >
+            {featuresData.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: feature.delay, ease: [0.22, 1, 0.36, 1] }}
+                className="glass-morphism p-6 rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 dark:bg-black/20 hover:bg-white/10 dark:hover:bg-black/30 transition-all duration-300"
+              >
+                <div className="mb-4 p-3 rounded-full bg-raya-purple/10 w-fit">
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground">{feature.description}</p>
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
       </main>
 
-      <footer className="w-full p-4 text-center text-sm text-muted-foreground">
+      <footer className="w-full py-6 px-4 text-center text-sm text-muted-foreground border-t border-border/20 backdrop-blur-sm">
         <p>© 2025 RAYA • AI-Powered Recruitment Assistant</p>
       </footer>
     </div>

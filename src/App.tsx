@@ -8,6 +8,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Search from "./pages/Search";
 import NotFound from "./pages/NotFound";
+import ResumeScreening from "./pages/ResumeScreening";
+import AIAssistant from "./pages/AIAssistant";
+import Scheduling from "./pages/Scheduling";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +22,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/resume-screening" element={<ResumeScreening />} />
+            <Route path="/ai-assistant" element={<AIAssistant />} />
+            <Route path="/scheduling" element={<Scheduling />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster />
