@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 import { filterCandidatesByQuery } from "@/data/mockCandidates";
 import SearchHeader from "@/components/search/SearchHeader";
@@ -31,7 +30,6 @@ const Search = () => {
     setIsSearching(true);
     setHasSearched(true);
     
-    // Simulate API call with our large dataset
     setTimeout(() => {
       const results = filterCandidatesByQuery(query);
       setSearchResults(results);
@@ -46,7 +44,6 @@ const Search = () => {
     }, 1500);
   };
 
-  // Handle page change
   const goToPage = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
