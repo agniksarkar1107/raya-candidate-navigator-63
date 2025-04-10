@@ -8,65 +8,23 @@ import ThemeToggle from "@/components/ThemeToggle";
 import CandidateCard from "@/components/CandidateCard";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-
-const mockCandidates = [
-  {
-    id: 1,
-    name: "Alex Johnson",
-    title: "Senior Frontend Developer",
-    location: "San Francisco, CA",
-    experience: "8 years",
-    skills: ["React", "Vue", "JavaScript", "CSS", "HTML"],
-    image: "https://i.pravatar.cc/150?img=1",
-    matchScore: 92,
-  },
-  {
-    id: 2,
-    name: "Samantha Lee",
-    title: "UI/UX Designer",
-    location: "New York, NY",
-    experience: "5 years",
-    skills: ["Figma", "Sketch", "Adobe XD", "Prototyping"],
-    image: "https://i.pravatar.cc/150?img=5",
-    matchScore: 88,
-  },
-  {
-    id: 3,
-    name: "Michael Chen",
-    title: "Full Stack Developer",
-    location: "Austin, TX",
-    experience: "6 years",
-    skills: ["Node.js", "React", "MongoDB", "Express", "TypeScript"],
-    image: "https://i.pravatar.cc/150?img=3",
-    matchScore: 85,
-  },
-  {
-    id: 4,
-    name: "Emily Rodriguez",
-    title: "Product Manager",
-    location: "Seattle, WA",
-    experience: "7 years",
-    skills: ["Agile", "Scrum", "Product Strategy", "User Research"],
-    image: "https://i.pravatar.cc/150?img=9",
-    matchScore: 79,
-  },
-  {
-    id: 5,
-    name: "David Kim",
-    title: "DevOps Engineer",
-    location: "Chicago, IL",
-    experience: "4 years",
-    skills: ["Docker", "Kubernetes", "AWS", "CI/CD", "Linux"],
-    image: "https://i.pravatar.cc/150?img=6",
-    matchScore: 75,
-  }
-];
+import { filterCandidatesByQuery } from "@/data/mockCandidates";
+import { 
+  Pagination, 
+  PaginationContent, 
+  PaginationItem, 
+  PaginationLink, 
+  PaginationNext, 
+  PaginationPrevious 
+} from "@/components/ui/pagination";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const resultsPerPage = 5;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -79,11 +37,18 @@ const Search = () => {
     setIsSearching(true);
     setHasSearched(true);
     
-    // Simulate API call
+    // Simulate API call with our large dataset
     setTimeout(() => {
-      setSearchResults(mockCandidates);
+      const results = filterCandidatesByQuery(searchQuery);
+      setSearchResults(results);
       setIsSearching(false);
-      toast.success(`Found ${mockCandidates.length} candidates for "${searchQuery}"`);
+      setCurrentPage(1);
+      
+      if (results.length > 0) {
+        toast.success(`Found ${results.length} candidates for "${searchQuery}"`);
+      } else {
+        toast.info(`No candidates found for "${searchQuery}". Try a different search term.`);
+      }
     }, 1500);
   };
 
@@ -91,6 +56,19 @@ const Search = () => {
     setSearchQuery("");
     setSearchResults([]);
     setHasSearched(false);
+  };
+
+  // Calculate pagination
+  const totalPages = Math.ceil(searchResults.length / resultsPerPage);
+  const paginatedResults = searchResults.slice(
+    (currentPage - 1) * resultsPerPage, 
+    currentPage * resultsPerPage
+  );
+
+  // Handle page change
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -111,7 +89,7 @@ const Search = () => {
           >
             <h2 className="text-3xl font-bold mb-6 text-center">Find Top Talent</h2>
             <p className="text-muted-foreground text-center mb-8">
-              Enter a job position to discover qualified candidates across all major job platforms
+              Enter a job position, skill, or category to discover qualified candidates across all major job platforms
             </p>
             
             <Card className="mb-8 overflow-hidden border-2 border-raya-purple/20">
@@ -121,7 +99,7 @@ const Search = () => {
                     <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                     <Input
                       type="text"
-                      placeholder="Enter job position (e.g., 'Frontend Developer')"
+                      placeholder="Try 'Frontend Developer', 'React', 'Marketing', etc."
                       className="pl-10 py-6 text-lg"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -171,10 +149,14 @@ const Search = () => {
               {searchResults.length > 0 ? (
                 <>
                   <h3 className="text-xl font-semibold mb-6">
-                    Top candidates for "{searchQuery}"
+                    Found {searchResults.length} candidates for "{searchQuery}"
+                    <span className="text-sm font-normal ml-2 text-muted-foreground">
+                      (Showing {(currentPage - 1) * resultsPerPage + 1}-
+                      {Math.min(currentPage * resultsPerPage, searchResults.length)} of {searchResults.length})
+                    </span>
                   </h3>
                   <div className="space-y-6">
-                    {searchResults.map((candidate, index) => (
+                    {paginatedResults.map((candidate, index) => (
                       <motion.div
                         key={candidate.id}
                         initial={{ opacity: 0, y: 20 }}
@@ -185,6 +167,63 @@ const Search = () => {
                       </motion.div>
                     ))}
                   </div>
+                  
+                  {totalPages > 1 && (
+                    <Pagination className="my-8">
+                      <PaginationContent>
+                        {currentPage > 1 && (
+                          <PaginationItem>
+                            <PaginationPrevious onClick={() => goToPage(currentPage - 1)} />
+                          </PaginationItem>
+                        )}
+                        
+                        {Array.from({ length: totalPages }, (_, i) => i + 1)
+                          .filter(page => 
+                            page === 1 || 
+                            page === totalPages || 
+                            (page >= currentPage - 1 && page <= currentPage + 1)
+                          )
+                          .map((page, i, array) => {
+                            // Add ellipsis where needed
+                            if (i > 0 && array[i - 1] !== page - 1) {
+                              return (
+                                <React.Fragment key={`ellipsis-${page}`}>
+                                  <PaginationItem>
+                                    <span className="flex h-9 w-9 items-center justify-center">...</span>
+                                  </PaginationItem>
+                                  <PaginationItem>
+                                    <PaginationLink 
+                                      onClick={() => goToPage(page)} 
+                                      isActive={page === currentPage}
+                                    >
+                                      {page}
+                                    </PaginationLink>
+                                  </PaginationItem>
+                                </React.Fragment>
+                              );
+                            }
+                            
+                            return (
+                              <PaginationItem key={page}>
+                                <PaginationLink 
+                                  onClick={() => goToPage(page)} 
+                                  isActive={page === currentPage}
+                                >
+                                  {page}
+                                </PaginationLink>
+                              </PaginationItem>
+                            );
+                          })
+                        }
+                        
+                        {currentPage < totalPages && (
+                          <PaginationItem>
+                            <PaginationNext onClick={() => goToPage(currentPage + 1)} />
+                          </PaginationItem>
+                        )}
+                      </PaginationContent>
+                    </Pagination>
+                  )}
                 </>
               ) : (
                 <div className="text-center py-12">
