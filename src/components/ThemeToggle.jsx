@@ -1,52 +1,25 @@
 
-import React, { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import React, { useEffect } from "react";
+import { Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState("dark"); // Default to dark theme
-
   useEffect(() => {
-    // Check localStorage and system preferences
-    const storedTheme = localStorage.getItem("theme");
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const initialTheme = storedTheme || systemTheme;
-    
-    setTheme(initialTheme);
-    updateDOM(initialTheme);
+    // Always set to light mode
+    document.documentElement.classList.add("light");
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
   }, []);
-
-  const updateDOM = (newTheme) => {
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    } else {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    updateDOM(newTheme);
-  };
 
   return (
     <Button 
       variant="ghost" 
       size="icon" 
-      onClick={toggleTheme}
-      className="rounded-full"
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      className="rounded-full opacity-0 pointer-events-none"
+      aria-hidden="true"
     >
-      {theme === "light" ? (
-        <Moon className="h-5 w-5 text-primary" />
-      ) : (
-        <Sun className="h-5 w-5 text-raya-yellow/80" />
-      )}
-      <span className="sr-only">Toggle theme</span>
+      <Sun className="h-5 w-5 text-primary" />
+      <span className="sr-only">Theme</span>
     </Button>
   );
 };

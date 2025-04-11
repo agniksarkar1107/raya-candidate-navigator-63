@@ -1,17 +1,28 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { motion, useInView } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Search, FileText, MessageSquare, Sparkles, Brain } from "lucide-react";
+import { ArrowRight, Search, FileText, MessageSquare, Sparkles } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Index = () => {
   const navigate = useNavigate();
   const [loaded, setLoaded] = useState(false);
-  const featuresRef = useRef(null);
-  const isInView = useInView(featuresRef, { once: true, amount: 0.2 });
+  
+  // Create separate refs for each feature
+  const feature1Ref = useRef(null);
+  const feature2Ref = useRef(null);
+  const feature3Ref = useRef(null);
+  const titleRef = useRef(null);
+  
+  // Track each element separately
+  const isTitleInView = useInView(titleRef, { once: true, amount: 0.5 });
+  const isFeature1InView = useInView(feature1Ref, { once: true, amount: 0.5 });
+  const isFeature2InView = useInView(feature2Ref, { once: true, amount: 0.5 });
+  const isFeature3InView = useInView(feature3Ref, { once: true, amount: 0.5 });
 
   useEffect(() => {
     setLoaded(true);
@@ -60,21 +71,24 @@ const Index = () => {
       description: "Deploy our AI to find perfect candidates across all job platforms",
       icon: <Search className="w-6 h-6 text-raya-yellow/90" />,
       route: "/search",
-      delay: 0.2
+      ref: feature1Ref,
+      isInView: isFeature1InView
     },
     {
       title: "Resume Screening Agent",
       description: "Upload and analyze resumes with superintelligent matching",
       icon: <FileText className="w-6 h-6 text-raya-green/90" />,
       route: "/resume-screening",
-      delay: 0.3
+      ref: feature2Ref,
+      isInView: isFeature2InView
     },
     {
       title: "AI Conversation Agent",
       description: "Chat with our superintelligent AI to analyze candidate data",
       icon: <MessageSquare className="w-6 h-6 text-raya-purple/90" />,
       route: "/ai-assistant",
-      delay: 0.4
+      ref: feature3Ref,
+      isInView: isFeature3InView
     }
   ];
 
@@ -87,7 +101,7 @@ const Index = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl font-bold flex items-center"
         >
-          <Brain className="w-5 h-5 mr-2 text-raya-yellow/90" />
+          <Sparkles className="w-5 h-5 mr-2 text-raya-yellow/90" />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-raya-yellow/90 via-raya-purple/80 to-raya-green/80 bg-[length:200%_auto]">
             RAYA
           </span>
@@ -216,51 +230,54 @@ const Index = () => {
 
             <section 
               id="features" 
-              ref={featuresRef}
               className="py-24 px-4 md:px-8 bg-gradient-to-b from-background to-background/90"
             >
               <div className="max-w-5xl mx-auto">
                 <motion.h2 
-                  className="text-3xl md:text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-raya-yellow/90 to-raya-green/80"
+                  ref={titleRef}
+                  className="text-3xl md:text-4xl font-bold text-center mb-24 bg-clip-text text-transparent bg-gradient-to-r from-raya-yellow/90 to-raya-green/80"
                   style={{ 
                     textShadow: 'rgba(254, 253, 154, 0.15) 0px 0px 8px'
                   }}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.6 }}
                 >
                   Our AI Agents
                 </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="flex flex-col space-y-24">
                   {featuresData.map((feature, index) => (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, y: 40 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      className="dark:glass-morphism light:light-glass-morphism p-6 rounded-xl border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-md flex flex-col h-full"
+                      ref={feature.ref}
+                      initial={{ opacity: 0, y: 60 }}
+                      animate={feature.isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+                      transition={{ duration: 0.8 }}
+                      className="light-glass-morphism p-8 rounded-xl border border-black/5 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-md flex flex-col md:flex-row items-center md:items-start h-full"
                       onClick={() => navigate(feature.route)}
                       role="button"
                       tabIndex={0}
                       style={{ cursor: 'pointer' }}
                     >
-                      <div className="p-3 rounded-full bg-black/20 dark:bg-black/30 w-fit border border-raya-yellow/10 shadow-sm mb-4">
+                      <div className="p-4 rounded-full bg-white/10 w-fit border border-raya-yellow/10 shadow-sm mb-6 md:mb-0 md:mr-6">
                         {feature.icon}
                       </div>
-                      <h3 className="text-xl font-semibold mb-3 text-foreground flex items-center">
-                        {feature.title}
-                        <Sparkles className="w-4 h-4 ml-2 text-raya-yellow/80" />
-                      </h3>
-                      <p className="text-muted-foreground">{feature.description}</p>
-                      <div className="mt-auto pt-4">
-                        <Button 
-                          variant="ghost" 
-                          className="group px-0 hover:bg-transparent"
-                        >
-                          <span className="text-raya-yellow/90">Explore</span>
-                          <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 text-raya-yellow/90" />
-                        </Button>
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-semibold mb-4 text-foreground flex items-center justify-center md:justify-start">
+                          {feature.title}
+                          <Sparkles className="w-5 h-5 ml-2 text-raya-yellow/80" />
+                        </h3>
+                        <p className="text-muted-foreground text-center md:text-left text-lg mb-6">{feature.description}</p>
+                        <div className="flex justify-center md:justify-start">
+                          <Button 
+                            variant="ghost" 
+                            className="group px-0 hover:bg-transparent"
+                          >
+                            <span className="text-raya-yellow/90">Explore</span>
+                            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 text-raya-yellow/90" />
+                          </Button>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
