@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Search, FileText, MessageSquare, Calendar, Sparkles } from "lucide-react";
+import { ArrowRight, Search, FileText, MessageSquare, Calendar, Sparkles, Brain } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const Index = () => {
     {
       title: "Candidate Search Agent",
       description: "Deploy our AI to find perfect candidates across all job platforms",
-      icon: <Search className="w-6 h-6 text-raya-blue" />,
+      icon: <Search className="w-6 h-6 text-raya-yellow" />,
       delay: 0.2
     },
     {
@@ -86,8 +86,9 @@ const Index = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-xl font-bold text-gradient animate-text-shimmer bg-gradient-to-r from-raya-blue via-raya-purple to-raya-green bg-[length:200%_auto]"
+          className="text-xl font-bold text-gradient-yellow animate-text-shimmer bg-gradient-to-r from-raya-yellow via-raya-purple to-raya-green bg-[length:200%_auto] flex items-center"
         >
+          <Brain className="w-5 h-5 mr-2 text-raya-yellow animate-pulse" />
           RAYA
         </motion.div>
         <ThemeToggle />
@@ -100,7 +101,7 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.1 }}
             transition={{ duration: 2, delay: 0.5 }}
-            className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-raya-blue blur-[120px]" 
+            className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-raya-yellow blur-[120px]" 
           />
           <motion.div 
             initial={{ opacity: 0 }}
@@ -132,7 +133,7 @@ const Index = () => {
                   key={index}
                   custom={index}
                   variants={letterVariants}
-                  className="inline-block text-8xl md:text-9xl font-bold text-gradient animate-text-shimmer bg-gradient-to-r from-raya-blue via-raya-purple to-raya-green bg-[length:200%_auto]"
+                  className="inline-block text-8xl md:text-9xl font-bold text-gradient-yellow animate-text-shimmer bg-gradient-to-r from-raya-yellow via-raya-yellow/80 to-raya-green bg-[length:200%_auto] neon-yellow-glow"
                 >
                   {letter}
                 </motion.span>
@@ -141,10 +142,10 @@ const Index = () => {
           </motion.div>
 
           <motion.h2 
-            className="text-xl md:text-3xl mb-8 text-raya-text font-light tracking-wide"
+            className="text-xl md:text-3xl mb-8 text-raya-yellow font-light tracking-wide neon-yellow-glow"
             variants={itemVariants}
           >
-            Your Superintelligent HR Agent
+            Not your average HR
           </motion.h2>
 
           <motion.div 
@@ -161,7 +162,7 @@ const Index = () => {
             <Button 
               onClick={handleGetStarted} 
               size="lg" 
-              className="bg-gradient-to-r from-raya-blue to-raya-purple hover:from-raya-blue/90 hover:to-raya-purple/90 text-raya-dark px-10 py-7 rounded-full text-lg group transition-all duration-300 ease-in-out shadow-lg shadow-raya-blue/20"
+              className="bg-gradient-to-r from-raya-yellow to-raya-green hover:from-raya-yellow/90 hover:to-raya-green/90 text-black px-10 py-7 rounded-full text-lg group transition-all duration-300 ease-in-out shadow-lg shadow-raya-yellow/20 neon-yellow-box font-medium"
             >
               <span>Get Started</span>
               <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -178,13 +179,13 @@ const Index = () => {
                 transition={{ duration: 0.8, delay: feature.delay }}
                 className="glass-morphism p-8 rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-lg shadow-black/20 flex flex-col md:flex-row items-center gap-6"
               >
-                <div className="p-4 rounded-full bg-white/5 w-fit">
+                <div className="p-4 rounded-full bg-black/30 w-fit border border-raya-yellow/20 shadow-sm shadow-raya-yellow/10">
                   {feature.icon}
                 </div>
                 <div className="text-center md:text-left">
                   <h3 className="text-xl font-semibold mb-3 text-raya-text flex items-center justify-center md:justify-start">
                     {feature.title}
-                    <Sparkles className="w-4 h-4 ml-2 text-raya-green" />
+                    <Sparkles className="w-4 h-4 ml-2 text-raya-yellow" />
                   </h3>
                   <p className="text-raya-gray">{feature.description}</p>
                 </div>
