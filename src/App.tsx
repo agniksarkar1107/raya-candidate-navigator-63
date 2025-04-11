@@ -15,10 +15,10 @@ const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
-    // Always set to light mode
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
-    localStorage.setItem("theme", "light");
+    // Always set to dark mode
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
+    localStorage.setItem("theme", "dark");
   }, []);
 
   return (
