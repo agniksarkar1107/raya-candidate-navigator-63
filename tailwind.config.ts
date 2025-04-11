@@ -53,9 +53,12 @@ export default {
           foreground: "hsl(var(--card-foreground))"
         },
         raya: {
-          purple: "#9b87f5",
-          dark: "#1A1F2C",
-          gray: "#8E9196"
+          purple: "#C084FC",
+          dark: "#0F172A",
+          blue: "#00FFFF",
+          green: "#39FF14",
+          gray: "#94A3B8",
+          text: "#F8FAFC"
         }
       },
       borderRadius: {

@@ -13,27 +13,27 @@ const SearchHeader = () => {
     { 
       name: "Search", 
       path: "/search", 
-      icon: <Search className="w-4 h-4 mr-2" /> 
+      icon: <Search className="w-4 h-4 mr-2 text-raya-blue" /> 
     },
     { 
       name: "Resume Screening", 
       path: "/resume-screening", 
-      icon: <FileText className="w-4 h-4 mr-2" /> 
+      icon: <FileText className="w-4 h-4 mr-2 text-raya-green" /> 
     },
     { 
       name: "AI Assistant", 
       path: "/ai-assistant", 
-      icon: <MessageSquare className="w-4 h-4 mr-2" /> 
+      icon: <MessageSquare className="w-4 h-4 mr-2 text-raya-purple" /> 
     },
     { 
       name: "Scheduling", 
       path: "/scheduling", 
-      icon: <Calendar className="w-4 h-4 mr-2" /> 
+      icon: <Calendar className="w-4 h-4 mr-2 text-raya-blue" /> 
     },
   ];
 
   return (
-    <header className="border-b backdrop-blur-md bg-background/50 sticky top-0 z-10">
+    <header className="border-b border-white/10 backdrop-blur-md bg-raya-dark/90 sticky top-0 z-10 shadow-md">
       <div className="container mx-auto py-4 px-4">
         <div className="flex justify-between items-center">
           <motion.div 
@@ -44,7 +44,7 @@ const SearchHeader = () => {
           >
             <Button 
               variant="ghost" 
-              className="font-bold text-xl text-gradient animate-text-shimmer bg-gradient-to-r from-raya-purple via-indigo-500 to-purple-300 bg-[length:200%_auto]"
+              className="font-bold text-xl text-gradient animate-text-shimmer bg-gradient-to-r from-raya-blue via-raya-purple to-raya-green bg-[length:200%_auto]"
               onClick={() => navigate('/')}
             >
               RAYA
@@ -56,7 +56,7 @@ const SearchHeader = () => {
                   key={item.path}
                   variant="ghost"
                   size="sm"
-                  className="flex items-center"
+                  className="flex items-center text-raya-text hover:text-white hover:bg-white/10"
                   onClick={() => navigate(item.path)}
                 >
                   {item.icon}
