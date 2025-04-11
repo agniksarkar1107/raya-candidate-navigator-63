@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -22,7 +21,6 @@ const Index = () => {
     navigate('/search');
   };
 
-  // Define animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -100,9 +98,7 @@ const Index = () => {
       <main className="flex-1 flex flex-col">
         <ScrollArea className="flex-1 h-[calc(100vh-4rem)]">
           <div className="relative min-h-[100vh] flex flex-col">
-            {/* Hero Section - Always centered */}
             <section className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 py-24 relative">
-              {/* Background decorative elements */}
               <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none">
                 <motion.div 
                   initial={{ opacity: 0 }}
@@ -218,7 +214,6 @@ const Index = () => {
               </motion.div>
             </section>
 
-            {/* Features Section - Appears on scroll */}
             <section 
               id="features" 
               ref={featuresRef}
@@ -232,7 +227,7 @@ const Index = () => {
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: A0.6 }}
+                  transition={{ duration: 0.6 }}
                 >
                   Our AI Agents
                 </motion.h2>
