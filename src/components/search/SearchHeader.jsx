@@ -4,7 +4,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, FileText, MessageSquare, Menu, X, Sparkles, Cpu, Brain } from "lucide-react";
+import { Search, FileText, MessageSquare, Menu, X, Sparkles, Brain } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const SearchHeader = () => {
@@ -36,7 +36,7 @@ const SearchHeader = () => {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   
   return (
-    <header className="border-b border-white/10 backdrop-blur-md bg-raya-dark/90 sticky top-0 z-50 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+    <header className="border-b border-border backdrop-blur-md bg-background/90 sticky top-0 z-50 shadow-md">
       <div className="container mx-auto py-4 px-4">
         <div className="flex justify-between items-center">
           <motion.div 
@@ -50,7 +50,10 @@ const SearchHeader = () => {
               className="font-bold text-xl text-gradient-yellow animate-text-shimmer bg-gradient-to-r from-raya-yellow via-raya-purple to-raya-green bg-[length:200%_auto] flex items-center"
               onClick={() => navigate('/')}
             >
-              <Brain className="w-5 h-5 mr-2 text-raya-yellow animate-pulse" />
+              <Avatar className="w-8 h-8 mr-2">
+                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FEFD9A&size=32" alt="RAYA" />
+                <AvatarFallback className="bg-raya-dark text-raya-yellow">RA</AvatarFallback>
+              </Avatar>
               RAYA
             </Button>
             
@@ -60,8 +63,8 @@ const SearchHeader = () => {
                   key={item.path}
                   variant="ghost"
                   size="sm"
-                  className={`flex items-center text-raya-text hover:text-white hover:bg-white/10 transition-all duration-300 ${
-                    location.pathname === item.path ? "bg-white/10 text-white" : ""
+                  className={`flex items-center hover:bg-accent transition-all duration-300 ${
+                    location.pathname === item.path ? "bg-accent text-accent-foreground" : ""
                   }`}
                   onClick={() => navigate(item.path)}
                 >
@@ -80,15 +83,15 @@ const SearchHeader = () => {
               className="hidden md:flex"
             >
               <Avatar className="h-9 w-9 border-2 border-raya-yellow/30 animate-pulse-glow">
-                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FAFF00" />
-                <AvatarFallback className="bg-raya-yellow/10 text-raya-yellow">RA</AvatarFallback>
+                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FEFD9A" alt="RAYA" />
+                <AvatarFallback className="bg-raya-dark text-raya-yellow">RA</AvatarFallback>
               </Avatar>
             </motion.div>
             <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-raya-text"
+              className="md:hidden"
               onClick={toggleSidebar}
             >
               <Menu className="h-5 w-5" />
@@ -105,24 +108,27 @@ const SearchHeader = () => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-            className="fixed inset-0 z-50 bg-raya-dark/95 backdrop-blur-xl"
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl"
           >
             <div className="flex flex-col h-full p-6">
               <div className="flex justify-between items-center mb-8">
                 <Button 
                   variant="ghost" 
-                  className="font-bold text-xl text-gradient-yellow animate-text-shimmer bg-gradient-to-r from-raya-yellow via-raya-purple to-raya-green bg-[length:200%_auto]"
+                  className="font-bold text-xl text-gradient-yellow animate-text-shimmer bg-gradient-to-r from-raya-yellow via-raya-purple to-raya-green bg-[length:200%_auto] flex items-center"
                   onClick={() => {
                     navigate('/');
                     setSidebarOpen(false);
                   }}
                 >
+                  <Avatar className="w-8 h-8 mr-2">
+                    <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FEFD9A&size=32" alt="RAYA" />
+                    <AvatarFallback className="bg-raya-dark text-raya-yellow">RA</AvatarFallback>
+                  </Avatar>
                   RAYA
                 </Button>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-raya-text"
                   onClick={toggleSidebar}
                 >
                   <X className="h-5 w-5" />
@@ -139,8 +145,8 @@ const SearchHeader = () => {
                   >
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start text-lg text-raya-text hover:text-white hover:bg-white/10 py-4 ${
-                        location.pathname === item.path ? "bg-white/10 text-white" : ""
+                      className={`w-full justify-start text-lg hover:bg-accent py-4 ${
+                        location.pathname === item.path ? "bg-accent text-accent-foreground" : ""
                       }`}
                       onClick={() => {
                         navigate(item.path);
@@ -150,24 +156,24 @@ const SearchHeader = () => {
                       {item.icon}
                       <div className="flex flex-col items-start">
                         <span>{item.name}</span>
-                        <span className="text-xs text-raya-gray">{item.description}</span>
+                        <span className="text-xs text-muted-foreground">{item.description}</span>
                       </div>
                     </Button>
                   </motion.div>
                 ))}
               </div>
               
-              <div className="mt-auto flex items-center space-x-3 p-4 bg-black/20 rounded-lg border border-white/5">
+              <div className="mt-auto flex items-center space-x-3 p-4 bg-muted rounded-lg border border-border">
                 <Avatar className="border-2 border-raya-yellow/30 h-10 w-10">
-                  <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FAFF00" />
-                  <AvatarFallback className="bg-raya-yellow/10 text-raya-yellow">RA</AvatarFallback>
+                  <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FEFD9A" alt="RAYA" />
+                  <AvatarFallback className="bg-raya-dark text-raya-yellow">RA</AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-raya-text flex items-center">
+                  <p className="flex items-center">
                     RAYA
                     <Sparkles className="ml-1 h-3 w-3 text-raya-yellow" />
                   </p>
-                  <p className="text-xs text-raya-gray">Your superintelligent HR agent</p>
+                  <p className="text-xs text-muted-foreground">Your superintelligent HR agent</p>
                 </div>
               </div>
             </div>

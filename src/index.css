@@ -1,36 +1,37 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 222 84% 3%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
     
-    --card: 222 84% 4%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
     
-    --popover: 222 84% 3%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
     
-    --primary: 192 100% 50%;
-    --primary-foreground: 222 84% 9%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
     
-    --secondary: 135 100% 54%;
-    --secondary-foreground: 222 84% 9%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11%;
     
-    --muted: 222 50% 12%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
     
-    --accent: 278 98% 75%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222 47% 11%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
     
-    --border: 214 32% 20%;
-    --input: 214 32% 20%;
-    --ring: 192 100% 50%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222 47% 11%;
     
     --radius: 0.75rem;
   }
@@ -45,24 +46,24 @@
     --popover: 222 84% 3%;
     --popover-foreground: 210 40% 98%;
     
-    --primary: 192 100% 50%;
-    --primary-foreground: 222 84% 9%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 11%;
     
-    --secondary: 135 100% 54%;
-    --secondary-foreground: 222 84% 9%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
     
     --muted: 222 50% 12%;
     --muted-foreground: 215 20% 65%;
     
-    --accent: 278 98% 75%;
+    --accent: 217 32% 17%;
     --accent-foreground: 210 40% 98%;
     
-    --destructive: 0 84% 60%;
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     
     --border: 214 32% 20%;
     --input: 214 32% 20%;
-    --ring: 192 100% 50%;
+    --ring: 210 40% 98%;
   }
 }
 
@@ -71,7 +72,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-raya-dark text-raya-text;
+    @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -89,8 +90,12 @@
     @apply backdrop-blur-lg bg-black/20 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)];
   }
   
+  .glass-morphism-light {
+    @apply backdrop-blur-lg bg-white/20 border border-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.1)];
+  }
+  
   .raya-border-gradient {
-    border-image: linear-gradient(to right, #00FFFF, #C084FC) 1;
+    border-image: linear-gradient(to right, #81ECEC, #C897FC) 1;
   }
   
   .hover-scale {
@@ -115,27 +120,27 @@
   }
   
   .neon-yellow-glow {
-    text-shadow: 0 0 10px rgba(250, 255, 0, 0.7), 
-                 0 0 20px rgba(250, 255, 0, 0.5), 
-                 0 0 30px rgba(250, 255, 0, 0.3);
+    text-shadow: 0 0 10px rgba(254, 253, 154, 0.5), 
+                 0 0 20px rgba(254, 253, 154, 0.3), 
+                 0 0 30px rgba(254, 253, 154, 0.2);
   }
   
   .neon-glow {
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 
-                 0 0 20px rgba(0, 255, 255, 0.5), 
-                 0 0 30px rgba(0, 255, 255, 0.3);
+    text-shadow: 0 0 10px rgba(129, 236, 236, 0.5), 
+                 0 0 20px rgba(129, 236, 236, 0.3), 
+                 0 0 30px rgba(129, 236, 236, 0.2);
   }
   
   .neon-box {
-    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5), 
-                0 0 10px rgba(0, 255, 255, 0.3), 
-                0 0 15px rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 5px rgba(129, 236, 236, 0.4), 
+                0 0 10px rgba(129, 236, 236, 0.2), 
+                0 0 15px rgba(129, 236, 236, 0.1);
   }
   
   .neon-yellow-box {
-    box-shadow: 0 0 5px rgba(250, 255, 0, 0.5), 
-                0 0 10px rgba(250, 255, 0, 0.3), 
-                0 0 15px rgba(250, 255, 0, 0.1);
+    box-shadow: 0 0 5px rgba(254, 253, 154, 0.4), 
+                0 0 10px rgba(254, 253, 154, 0.2), 
+                0 0 15px rgba(254, 253, 154, 0.1);
   }
   
   .card-shimmer {
@@ -195,5 +200,13 @@
     100% {
       left: 100%;
     }
+  }
+
+  .dark .dark-glass-morphism {
+    @apply backdrop-blur-lg bg-black/20 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)];
+  }
+  
+  .light .light-glass-morphism {
+    @apply backdrop-blur-lg bg-white/20 border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.1)];
   }
 }

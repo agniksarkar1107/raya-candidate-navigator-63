@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Search, FileText, MessageSquare, Calendar, Sparkles, Brain } from "lucide-react";
+import { ArrowRight, Search, FileText, MessageSquare, Sparkles, Brain } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -70,17 +71,11 @@ const Index = () => {
       description: "Chat with our superintelligent AI to analyze candidate data",
       icon: <MessageSquare className="w-6 h-6 text-raya-purple" />,
       delay: 0.4
-    },
-    {
-      title: "Scheduling Agent",
-      description: "Let RAYA handle interview scheduling and emails autonomously",
-      icon: <Calendar className="w-6 h-6 text-raya-blue" />,
-      delay: 0.5
     }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-raya-dark overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden">
       <header className="w-full p-6 flex justify-between items-center z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
@@ -124,7 +119,25 @@ const Index = () => {
           variants={containerVariants}
         >
           <motion.div 
-            className="mb-12 flex justify-center"
+            className="mb-6 flex justify-center"
+            variants={itemVariants}
+          >
+            <div className="relative">
+              <Avatar className="h-32 w-32 border-4 border-raya-yellow/30 animate-pulse-glow">
+                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FEFD9A&size=128" alt="RAYA AI Assistant" />
+                <AvatarFallback className="bg-raya-dark text-raya-yellow text-2xl">RA</AvatarFallback>
+              </Avatar>
+              <div className="absolute -bottom-2 -right-2 bg-raya-green/20 text-raya-green rounded-full px-2 py-1 text-xs border border-raya-green/30">
+                <div className="flex items-center">
+                  <span className="h-2 w-2 bg-raya-green rounded-full mr-1 animate-pulse"></span>
+                  Active
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            className="mb-8 flex justify-center"
             variants={itemVariants}
           >
             <div className="flex items-center">
@@ -149,7 +162,7 @@ const Index = () => {
           </motion.h2>
 
           <motion.div 
-            className="max-w-2xl mx-auto mb-16 text-raya-gray text-lg"
+            className="max-w-2xl mx-auto mb-16 text-muted-foreground text-lg"
             variants={itemVariants}
           >
             <p>Transforming recruitment with superhuman AI technology</p>
@@ -177,17 +190,17 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, delay: feature.delay }}
-                className="glass-morphism p-8 rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-lg shadow-black/20 flex flex-col md:flex-row items-center gap-6"
+                className="dark:glass-morphism light:light-glass-morphism p-8 rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-lg shadow-black/20 flex flex-col md:flex-row items-center gap-6"
               >
                 <div className="p-4 rounded-full bg-black/30 w-fit border border-raya-yellow/20 shadow-sm shadow-raya-yellow/10">
                   {feature.icon}
                 </div>
                 <div className="text-center md:text-left">
-                  <h3 className="text-xl font-semibold mb-3 text-raya-text flex items-center justify-center md:justify-start">
+                  <h3 className="text-xl font-semibold mb-3 text-foreground flex items-center justify-center md:justify-start">
                     {feature.title}
                     <Sparkles className="w-4 h-4 ml-2 text-raya-yellow" />
                   </h3>
-                  <p className="text-raya-gray">{feature.description}</p>
+                  <p className="text-muted-foreground">{feature.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -195,7 +208,7 @@ const Index = () => {
         </motion.div>
       </main>
 
-      <footer className="w-full py-6 px-4 text-center text-sm text-raya-gray border-t border-white/5 backdrop-blur-sm">
+      <footer className="w-full py-6 px-4 text-center text-sm text-muted-foreground border-t border-border backdrop-blur-sm">
         <p>© 2025 RAYA • Superintelligent Recruitment Assistant</p>
       </footer>
     </div>

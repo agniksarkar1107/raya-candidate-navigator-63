@@ -4,19 +4,33 @@ import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark"); // Default to dark theme
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") || "light";
-    setTheme(storedTheme);
-    document.documentElement.classList.toggle("dark", storedTheme === "dark");
+    // Check localStorage and system preferences
+    const storedTheme = localStorage.getItem("theme");
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    const initialTheme = storedTheme || systemTheme;
+    
+    setTheme(initialTheme);
+    updateDOM(initialTheme);
   }, []);
+
+  const updateDOM = (newTheme) => {
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
+  };
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    updateDOM(newTheme);
   };
 
   return (
@@ -29,7 +43,7 @@ const ThemeToggle = () => {
       {theme === "light" ? (
         <Moon className="h-5 w-5 text-raya-purple" />
       ) : (
-        <Sun className="h-5 w-5 text-raya-purple" />
+        <Sun className="h-5 w-5 text-raya-yellow" />
       )}
       <span className="sr-only">Toggle theme</span>
     </Button>
