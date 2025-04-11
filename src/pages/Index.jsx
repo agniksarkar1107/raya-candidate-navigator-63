@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Search, FileText, MessageSquare, Calendar } from "lucide-react";
+import { ArrowRight, Search, FileText, MessageSquare, Calendar, Sparkles } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -54,33 +54,33 @@ const Index = () => {
 
   const featuresData = [
     {
-      title: "Candidate Search",
-      description: "Find perfect candidates across all job platforms",
+      title: "Candidate Search Agent",
+      description: "Deploy our AI to find perfect candidates across all job platforms",
       icon: <Search className="w-6 h-6 text-raya-blue" />,
       delay: 0.2
     },
     {
-      title: "Resume Screening",
-      description: "Upload and analyze resumes for job matching",
+      title: "Resume Screening Agent",
+      description: "Upload and analyze resumes with superintelligent matching",
       icon: <FileText className="w-6 h-6 text-raya-green" />,
       delay: 0.3
     },
     {
-      title: "AI Assistant",
-      description: "Chat with our AI to analyze candidate data",
+      title: "AI Conversation Agent",
+      description: "Chat with our superintelligent AI to analyze candidate data",
       icon: <MessageSquare className="w-6 h-6 text-raya-purple" />,
       delay: 0.4
     },
     {
-      title: "Scheduling",
-      description: "Automate interview scheduling and emails",
+      title: "Scheduling Agent",
+      description: "Let RAYA handle interview scheduling and emails autonomously",
       icon: <Calendar className="w-6 h-6 text-raya-blue" />,
       delay: 0.5
     }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-raya-dark">
+    <div className="min-h-screen flex flex-col bg-raya-dark overflow-x-hidden">
       <header className="w-full p-6 flex justify-between items-center z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
@@ -144,14 +144,14 @@ const Index = () => {
             className="text-xl md:text-3xl mb-8 text-raya-text font-light tracking-wide"
             variants={itemVariants}
           >
-            Your AI-powered HR Assistant
+            Your Superintelligent HR Agent
           </motion.h2>
 
           <motion.div 
             className="max-w-2xl mx-auto mb-16 text-raya-gray text-lg"
             variants={itemVariants}
           >
-            <p>Transforming recruitment with cutting-edge AI technology</p>
+            <p>Transforming recruitment with superhuman AI technology</p>
           </motion.div>
 
           <motion.div 
@@ -168,31 +168,34 @@ const Index = () => {
             </Button>
           </motion.div>
 
-          <motion.div 
-            variants={itemVariants}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
-          >
+          <div className="flex flex-col gap-16 max-w-4xl mx-auto">
             {featuresData.map((feature, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: feature.delay, ease: [0.22, 1, 0.36, 1] }}
-                className="glass-morphism p-6 rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-lg shadow-black/20"
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay: feature.delay }}
+                className="glass-morphism p-8 rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-lg shadow-black/20 flex flex-col md:flex-row items-center gap-6"
               >
-                <div className="mb-4 p-3 rounded-full bg-white/5 w-fit">
+                <div className="p-4 rounded-full bg-white/5 w-fit">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-raya-text">{feature.title}</h3>
-                <p className="text-sm text-raya-gray">{feature.description}</p>
+                <div className="text-center md:text-left">
+                  <h3 className="text-xl font-semibold mb-3 text-raya-text flex items-center justify-center md:justify-start">
+                    {feature.title}
+                    <Sparkles className="w-4 h-4 ml-2 text-raya-green" />
+                  </h3>
+                  <p className="text-raya-gray">{feature.description}</p>
+                </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </motion.div>
       </main>
 
       <footer className="w-full py-6 px-4 text-center text-sm text-raya-gray border-t border-white/5 backdrop-blur-sm">
-        <p>© 2025 RAYA • AI-Powered Recruitment Assistant</p>
+        <p>© 2025 RAYA • Superintelligent Recruitment Assistant</p>
       </footer>
     </div>
   );

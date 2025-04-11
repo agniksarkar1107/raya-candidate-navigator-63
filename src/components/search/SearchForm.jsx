@@ -1,8 +1,9 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search as SearchIcon, X, Loader2 } from "lucide-react";
+import { Search as SearchIcon, X, Loader2, Sparkles, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
 const SearchForm = ({ onSearch, isSearching }) => {
@@ -26,12 +27,15 @@ const SearchForm = ({ onSearch, isSearching }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-3xl font-bold mb-6 text-center">Find Top Talent</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center flex items-center justify-center">
+        <Sparkles className="w-6 h-6 mr-2 text-raya-green animate-pulse" />
+        Talent Discovery Agent
+      </h2>
       <p className="text-muted-foreground text-center mb-8">
-        Enter a job position, skill, or category to discover qualified candidates across all major job platforms
+        Enter a job position, skill, or category to activate the AI agent and discover qualified candidates
       </p>
       
-      <Card className="mb-8 overflow-hidden border-2 border-raya-purple/20">
+      <Card className="mb-8 overflow-hidden border-2 border-raya-purple/20 shadow-lg shadow-raya-purple/5">
         <CardContent className="p-6">
           <form onSubmit={handleSubmit} className="flex gap-2">
             <div className="relative flex-1">
@@ -39,7 +43,7 @@ const SearchForm = ({ onSearch, isSearching }) => {
               <Input
                 type="text"
                 placeholder="Try 'Frontend Developer', 'React', 'Marketing', etc."
-                className="pl-10 py-6 text-lg"
+                className="pl-10 py-6 text-lg bg-white/5"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -55,16 +59,19 @@ const SearchForm = ({ onSearch, isSearching }) => {
             </div>
             <Button 
               type="submit" 
-              className="bg-raya-purple hover:bg-raya-purple/90 text-white px-6"
+              className="bg-gradient-to-r from-raya-blue to-raya-purple hover:bg-none hover:bg-raya-blue/90 text-white px-6 py-6"
               disabled={isSearching}
             >
               {isSearching ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Searching...
+                  Running agent...
                 </>
               ) : (
-                "Search"
+                <>
+                  <Zap className="mr-2 h-4 w-4" />
+                  Run Agent
+                </>
               )}
             </Button>
           </form>
