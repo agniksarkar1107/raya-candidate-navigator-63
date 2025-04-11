@@ -54,11 +54,16 @@ export default {
         },
         raya: {
           purple: "#C084FC",
-          dark: "#0F172A",
+          dark: "#080A12", // Darker black
           blue: "#00FFFF",
           green: "#39FF14",
           gray: "#94A3B8",
-          text: "#F8FAFC"
+          text: "#F8FAFC",
+          neon: {
+            purple: "#D946EF", // New neon magenta
+            pink: "#F472B6", // New neon pink
+            cyan: "#00FFFF", // Electric blue
+          }
         }
       },
       borderRadius: {
@@ -94,6 +99,18 @@ export default {
           "100%": {
             backgroundPosition: "100% 50%",
           },
+        },
+        "pulse-glow": {
+          "0%, 100%": { 
+            boxShadow: "0 0 15px 2px rgba(0, 255, 255, 0.5)"
+          },
+          "50%": { 
+            boxShadow: "0 0 30px 5px rgba(0, 255, 255, 0.8)"
+          }
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" }
         }
       },
       animation: {
@@ -103,6 +120,8 @@ export default {
         "fade-out": "fade-out 0.3s ease-out",
         "slide-in": "slide-in 0.5s ease-out forwards",
         "text-shimmer": "text-shimmer 2.5s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+        "float": "float 5s ease-in-out infinite"
       }
     }
   },

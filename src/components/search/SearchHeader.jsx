@@ -4,7 +4,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, FileText, MessageSquare, Calendar, Menu, X, Sparkles, Cpu } from "lucide-react";
+import { Search, FileText, MessageSquare, Menu, X, Sparkles, Cpu, Brain } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const SearchHeader = () => {
@@ -30,19 +30,13 @@ const SearchHeader = () => {
       path: "/ai-assistant", 
       icon: <MessageSquare className="w-5 h-5 mr-3 text-raya-purple" />,
       description: "Chat with data"
-    },
-    { 
-      name: "Scheduling", 
-      path: "/scheduling", 
-      icon: <Calendar className="w-5 h-5 mr-3 text-raya-blue" />,
-      description: "Automate interviews"
-    },
+    }
   ];
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   
   return (
-    <header className="border-b border-white/10 backdrop-blur-md bg-raya-dark/90 sticky top-0 z-50 shadow-md">
+    <header className="border-b border-white/10 backdrop-blur-md bg-raya-dark/90 sticky top-0 z-50 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
       <div className="container mx-auto py-4 px-4">
         <div className="flex justify-between items-center">
           <motion.div 
@@ -56,7 +50,7 @@ const SearchHeader = () => {
               className="font-bold text-xl text-gradient animate-text-shimmer bg-gradient-to-r from-raya-blue via-raya-purple to-raya-green bg-[length:200%_auto] flex items-center"
               onClick={() => navigate('/')}
             >
-              <Cpu className="w-5 h-5 mr-2 text-raya-blue" />
+              <Brain className="w-5 h-5 mr-2 text-raya-blue animate-pulse" />
               RAYA
             </Button>
             
@@ -85,8 +79,8 @@ const SearchHeader = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="hidden md:flex"
             >
-              <Avatar className="h-9 w-9 border-2 border-raya-purple/30">
-                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=0F172A&color=00FFFF" />
+              <Avatar className="h-9 w-9 border-2 border-raya-purple/30 animate-pulse-glow">
+                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=00FFFF" />
                 <AvatarFallback className="bg-raya-blue/10 text-raya-blue">RA</AvatarFallback>
               </Avatar>
             </motion.div>
@@ -163,14 +157,17 @@ const SearchHeader = () => {
                 ))}
               </div>
               
-              <div className="mt-auto flex items-center space-x-3 p-4 bg-white/5 rounded-lg">
-                <Avatar>
-                  <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=0F172A&color=00FFFF" />
+              <div className="mt-auto flex items-center space-x-3 p-4 bg-black/20 rounded-lg border border-white/5">
+                <Avatar className="border-2 border-raya-blue/30 h-10 w-10">
+                  <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=00FFFF" />
                   <AvatarFallback className="bg-raya-blue/10 text-raya-blue">RA</AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-raya-text">RAYA Assistant</p>
-                  <p className="text-xs text-raya-gray">Superintelligent HR Agent</p>
+                  <p className="text-raya-text flex items-center">
+                    RAYA
+                    <Sparkles className="ml-1 h-3 w-3 text-raya-blue" />
+                  </p>
+                  <p className="text-xs text-raya-gray">Your superintelligent HR agent</p>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SendHorizontal, Loader2, Bot, User } from "lucide-react";
+import { SendHorizontal, Loader2, Bot, User, Brain, Sparkles, Cpu } from "lucide-react";
 import SearchHeader from "@/components/search/SearchHeader";
 
 const AIAssistant = () => {
@@ -12,7 +12,7 @@ const AIAssistant = () => {
     {
       id: "welcome",
       sender: "bot",
-      text: "Hello! I'm RAYA's AI Assistant. Ask me anything about candidates, recruitment, or HR processes.",
+      text: "Hello! I'm RAYA, your superintelligent HR assistant. Ask me anything about candidates, recruitment, or HR processes.",
       timestamp: new Date(),
     },
   ]);
@@ -68,24 +68,46 @@ const AIAssistant = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-background/95">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-raya-dark to-black/95 overflow-hidden">
       <SearchHeader />
 
-      <main className="flex-1 container mx-auto py-8 px-4 max-w-4xl flex flex-col">
+      <main className="flex-1 container mx-auto py-8 px-4 max-w-4xl flex flex-col relative">
+        {/* Background elements */}
+        <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none z-0 overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.05 }}
+            transition={{ duration: 2 }}
+            className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-raya-blue blur-[120px]" 
+          />
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.03 }}
+            transition={{ duration: 2, delay: 0.5 }}
+            className="absolute bottom-1/3 right-1/4 w-1/3 h-1/3 rounded-full bg-raya-purple blur-[150px]" 
+          />
+        </div>
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 text-center"
+          className="mb-8 text-center z-10"
         >
-          <h1 className="text-3xl font-bold mb-4">AI Assistant</h1>
+          <div className="inline-flex items-center space-x-2 mb-2">
+            <Cpu className="h-6 w-6 text-raya-neon-cyan animate-pulse" />
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-raya-blue via-raya-neon-purple to-raya-purple bg-clip-text text-transparent animate-text-shimmer bg-[length:200%_auto]">
+              RAYA Conversation
+            </h1>
+            <Cpu className="h-6 w-6 text-raya-neon-cyan animate-pulse" />
+          </div>
           <p className="text-muted-foreground">
-            Your intelligent HR companion for recruitment insights and candidate analysis
+            Your superintelligent HR companion for recruitment insights and candidate analysis
           </p>
         </motion.div>
 
-        <div className="flex-1 flex flex-col glass-morphism rounded-xl overflow-hidden border border-white/10 backdrop-blur-lg bg-white/5 dark:bg-black/20 p-1">
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 mb-2">
+        <div className="flex-1 flex flex-col glass-morphism rounded-xl overflow-hidden border border-white/10 backdrop-blur-lg bg-black/30 p-1 z-10 shadow-[0_0_30px_rgba(0,255,255,0.1)]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 mb-2 scrollbar-none">
             <AnimatePresence>
               {messages.map((message) => (
                 <motion.div
@@ -104,20 +126,22 @@ const AIAssistant = () => {
                   >
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                        message.sender === "user" ? "bg-raya-purple/20" : "bg-primary/10"
+                        message.sender === "user" 
+                          ? "bg-raya-purple/20 border border-raya-purple/30" 
+                          : "bg-raya-blue/10 border border-raya-blue/30"
                       }`}
                     >
                       {message.sender === "user" ? (
                         <User className="w-4 h-4" />
                       ) : (
-                        <Bot className="w-4 h-4" />
+                        <Brain className="w-4 h-4 text-raya-blue" />
                       )}
                     </div>
                     <div
                       className={`p-3 rounded-2xl ${
                         message.sender === "user"
-                          ? "bg-raya-purple text-white rounded-tr-none"
-                          : "bg-muted/50 dark:bg-muted/20 rounded-tl-none"
+                          ? "bg-gradient-to-r from-raya-purple/80 to-raya-neon-purple/70 text-white rounded-tr-none shadow-[0_0_8px_rgba(192,132,252,0.3)]"
+                          : "bg-gradient-to-r from-raya-blue/30 to-raya-blue/10 rounded-tl-none shadow-[0_0_8px_rgba(0,255,255,0.2)]"
                       }`}
                     >
                       <p className="text-sm">{message.text}</p>
@@ -139,14 +163,26 @@ const AIAssistant = () => {
                   className="flex justify-start"
                 >
                   <div className="flex items-start space-x-2 max-w-[80%]">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-primary/10">
-                      <Bot className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-raya-blue/10 border border-raya-blue/30">
+                      <Brain className="w-4 h-4 text-raya-blue" />
                     </div>
-                    <div className="p-3 rounded-2xl bg-muted/50 dark:bg-muted/20 rounded-tl-none">
+                    <div className="p-3 rounded-2xl bg-gradient-to-r from-raya-blue/30 to-raya-blue/10 rounded-tl-none">
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 rounded-full bg-foreground/50 animate-pulse"></div>
-                        <div className="w-2 h-2 rounded-full bg-foreground/50 animate-pulse delay-75"></div>
-                        <div className="w-2 h-2 rounded-full bg-foreground/50 animate-pulse delay-150"></div>
+                        <motion.div 
+                          animate={{ scale: [0.8, 1.2, 0.8] }} 
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                          className="w-2 h-2 rounded-full bg-raya-blue"
+                        ></motion.div>
+                        <motion.div 
+                          animate={{ scale: [0.8, 1.2, 0.8] }} 
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                          className="w-2 h-2 rounded-full bg-raya-blue"
+                        ></motion.div>
+                        <motion.div 
+                          animate={{ scale: [0.8, 1.2, 0.8] }} 
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+                          className="w-2 h-2 rounded-full bg-raya-blue"
+                        ></motion.div>
                       </div>
                     </div>
                   </div>
@@ -158,7 +194,7 @@ const AIAssistant = () => {
 
           <form
             onSubmit={handleSendMessage}
-            className="p-2 border-t border-border/30 bg-background/50 backdrop-blur-sm rounded-b-lg"
+            className="p-3 border-t border-white/10 bg-black/40 backdrop-blur-sm rounded-b-lg"
           >
             <div className="flex items-center space-x-2">
               <Input
@@ -166,18 +202,21 @@ const AIAssistant = () => {
                 placeholder="Ask about candidates, recruitment, or HR processes..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1"
+                className="flex-1 bg-black/30 border-white/10 text-raya-text placeholder:text-raya-gray/60 focus:border-raya-purple/50"
                 disabled={isTyping}
               />
               <Button
                 type="submit"
-                className="bg-raya-purple hover:bg-raya-purple/90"
+                className="bg-gradient-to-r from-raya-blue to-raya-purple hover:opacity-90 shadow-[0_0_10px_rgba(0,255,255,0.3)]"
                 disabled={!input.trim() || isTyping}
               >
                 {isTyping ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  <SendHorizontal className="h-4 w-4" />
+                  <>
+                    <span className="mr-1">Run</span>
+                    <Sparkles className="h-3.5 w-3.5" />
+                  </>
                 )}
               </Button>
             </div>
