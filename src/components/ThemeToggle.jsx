@@ -39,11 +39,12 @@ const ThemeToggle = () => {
       size="icon" 
       onClick={toggleTheme}
       className="rounded-full"
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
       {theme === "light" ? (
-        <Moon className="h-5 w-5 text-raya-purple" />
+        <Moon className="h-5 w-5 text-primary" />
       ) : (
-        <Sun className="h-5 w-5 text-raya-yellow" />
+        <Sun className="h-5 w-5 text-raya-yellow/80" />
       )}
       <span className="sr-only">Toggle theme</span>
     </Button>

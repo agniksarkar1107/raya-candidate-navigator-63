@@ -53,18 +53,18 @@ export default {
           foreground: "hsl(var(--card-foreground))"
         },
         raya: {
-          purple: "#C897FC", // Softer purple
+          purple: "#D7B7FC", // Softer, less saturated purple
           dark: "#080A12", // Darker black
-          blue: "#81ECEC", // Softer cyan
-          green: "#A0FF85", // Softer green
-          yellow: "#FEFD9A", // Softer yellow
+          blue: "#A0E8EC", // Softer, less saturated cyan
+          green: "#B5FFAE", // Softer, less saturated green
+          yellow: "#FFF7A0", // Softer, less saturated yellow
           gray: "#94A3B8",
           text: "#F8FAFC",
           neon: {
-            purple: "#D79CEF", // Softer magenta
-            pink: "#F8B8D8", // Softer pink
-            cyan: "#81ECEC", // Softer cyan
-            yellow: "#FEFD9A", // Softer yellow
+            purple: "#E1C6F4", // Much softer magenta
+            pink: "#F8D0E4", // Much softer pink
+            cyan: "#B0EDEF", // Much softer cyan
+            yellow: "#FFF7B5", // Much softer yellow
           }
         }
       },
@@ -104,10 +104,10 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": { 
-            boxShadow: "0 0 15px 2px rgba(129, 236, 236, 0.4)"
+            boxShadow: "0 0 10px 1px rgba(176, 237, 239, 0.2)"
           },
           "50%": { 
-            boxShadow: "0 0 30px 5px rgba(129, 236, 236, 0.6)"
+            boxShadow: "0 0 20px 3px rgba(176, 237, 239, 0.3)"
           }
         },
         "float": {
