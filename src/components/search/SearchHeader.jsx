@@ -28,7 +28,7 @@ const SearchHeader = () => {
     { 
       name: "AI Assistant", 
       path: "/ai-assistant", 
-      icon: <MessageSquare className="w-5 h-5 mr-3 text-raya-purple" />,
+      icon: <MessageSquare className="w-5 h-5 mr-3 text-raya-yellow" />,
       description: "Chat with data"
     }
   ];
@@ -47,10 +47,10 @@ const SearchHeader = () => {
           >
             <Button 
               variant="ghost" 
-              className="font-bold text-xl text-gradient animate-text-shimmer bg-gradient-to-r from-raya-blue via-raya-purple to-raya-green bg-[length:200%_auto] flex items-center"
+              className="font-bold text-xl text-gradient-yellow animate-text-shimmer bg-gradient-to-r from-raya-yellow via-raya-purple to-raya-green bg-[length:200%_auto] flex items-center"
               onClick={() => navigate('/')}
             >
-              <Brain className="w-5 h-5 mr-2 text-raya-blue animate-pulse" />
+              <Brain className="w-5 h-5 mr-2 text-raya-yellow animate-pulse" />
               RAYA
             </Button>
             
@@ -79,9 +79,9 @@ const SearchHeader = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="hidden md:flex"
             >
-              <Avatar className="h-9 w-9 border-2 border-raya-purple/30 animate-pulse-glow">
-                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=00FFFF" />
-                <AvatarFallback className="bg-raya-blue/10 text-raya-blue">RA</AvatarFallback>
+              <Avatar className="h-9 w-9 border-2 border-raya-yellow/30 animate-pulse-glow">
+                <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FAFF00" />
+                <AvatarFallback className="bg-raya-yellow/10 text-raya-yellow">RA</AvatarFallback>
               </Avatar>
             </motion.div>
             <ThemeToggle />
@@ -111,7 +111,7 @@ const SearchHeader = () => {
               <div className="flex justify-between items-center mb-8">
                 <Button 
                   variant="ghost" 
-                  className="font-bold text-xl text-gradient animate-text-shimmer bg-gradient-to-r from-raya-blue via-raya-purple to-raya-green bg-[length:200%_auto]"
+                  className="font-bold text-xl text-gradient-yellow animate-text-shimmer bg-gradient-to-r from-raya-yellow via-raya-purple to-raya-green bg-[length:200%_auto]"
                   onClick={() => {
                     navigate('/');
                     setSidebarOpen(false);
@@ -158,14 +158,14 @@ const SearchHeader = () => {
               </div>
               
               <div className="mt-auto flex items-center space-x-3 p-4 bg-black/20 rounded-lg border border-white/5">
-                <Avatar className="border-2 border-raya-blue/30 h-10 w-10">
-                  <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=00FFFF" />
-                  <AvatarFallback className="bg-raya-blue/10 text-raya-blue">RA</AvatarFallback>
+                <Avatar className="border-2 border-raya-yellow/30 h-10 w-10">
+                  <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FAFF00" />
+                  <AvatarFallback className="bg-raya-yellow/10 text-raya-yellow">RA</AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="text-raya-text flex items-center">
                     RAYA
-                    <Sparkles className="ml-1 h-3 w-3 text-raya-blue" />
+                    <Sparkles className="ml-1 h-3 w-3 text-raya-yellow" />
                   </p>
                   <p className="text-xs text-raya-gray">Your superintelligent HR agent</p>
                 </div>

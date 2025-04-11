@@ -57,12 +57,14 @@ export default {
           dark: "#080A12", // Darker black
           blue: "#00FFFF",
           green: "#39FF14",
+          yellow: "#FAFF00", // New neon yellow color
           gray: "#94A3B8",
           text: "#F8FAFC",
           neon: {
-            purple: "#D946EF", // New neon magenta
-            pink: "#F472B6", // New neon pink
+            purple: "#D946EF", // Neon magenta
+            pink: "#F472B6", // Neon pink
             cyan: "#00FFFF", // Electric blue
+            yellow: "#FAFF00", // Neon yellow
           }
         }
       },

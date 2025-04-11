@@ -23,7 +23,6 @@ const App = () => (
             <Route path="/search" element={<Search />} />
             <Route path="/resume-screening" element={<ResumeScreening />} />
             <Route path="/ai-assistant" element={<AIAssistant />} />
-            <Route path="/scheduling" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster />
