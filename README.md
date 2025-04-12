@@ -1,73 +1,122 @@
-# Welcome to your Lovable project
+# RAYA Candidate Navigator
 
-## Project info
+A sophisticated AI-powered recruitment platform that streamlines the candidate search and engagement process using advanced natural language processing and machine learning techniques.
 
-**URL**: https://lovable.dev/projects/e429f654-6c22-4bd7-a1fa-a6e8b3de265f
+## 🚀 Features
 
-## How can I edit this code?
+- **Intelligent Candidate Search**: Advanced semantic search powered by ChromaDB and Google's Gemini Pro
+- **Resume Screening**: Automated analysis of resumes with detailed scoring and insights
+- **AI Assistant**: Interactive chat interface for recruitment queries
+- **Candidate Engagement**: Automated email generation and outreach
+- **Web Search Integration**: Real-time candidate profile discovery
+- **Modern UI**: Built with React, TypeScript, and shadcn/ui components
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+### Frontend
+- **Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **State Management**: React Context API
+- **HTTP Client**: Axios
+- **Form Handling**: React Hook Form
+- **Animations**: Framer Motion
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e429f654-6c22-4bd7-a1fa-a6e8b3de265f) and start prompting.
+### Backend
+- **Framework**: FastAPI
+- **Language**: Python 3.11+
+- **AI/ML**: 
+  - Google Gemini Pro
+  - ChromaDB for vector storage
+  - LangChain for AI workflows
+- **Database**: SQLite (with ChromaDB for vector storage)
+- **File Processing**: PyPDF2, python-docx
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📋 Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ and npm
+- Python 3.11+
+- Google Cloud API key for Gemini Pro
+- Git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/raya-candidate-navigator-63.git
+   cd raya-candidate-navigator-63
+   ```
 
-Follow these steps:
+2. **Frontend Setup**
+   ```bash
+   # Install dependencies
+   npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+   # Start development server
+   npm run dev
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. **Backend Setup**
+   ```bash
+   # Navigate to backend directory
+   cd backend
 
-# Step 3: Install the necessary dependencies.
-npm i
+   # Create and activate virtual environment
+   python -m venv venv
+   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+   # Install dependencies
+   pip install -r requirements.txt
+
+   # Set up environment variables
+   cp .env.example .env
+   # Edit .env with your API keys and configuration
+
+   # Start the backend server
+   python main.py
+   ```
+
+4. **Start Both Servers**
+   ```bash
+   # From the root directory
+   npm run start:all
+   ```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file in the backend directory with the following variables:
+
+```env
+GOOGLE_API_KEY=your_gemini_api_key
+OPENAI_API_KEY=your_openai_api_key
 ```
 
-**Edit a file directly in GitHub**
+## 📚 API Documentation
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The backend provides several key endpoints:
 
-**Use GitHub Codespaces**
+- `/api/ai-assistant/chat`: AI-powered chat interface
+- `/api/resume-screening/analyze`: Resume analysis and scoring
+- `/api/candidate-search/search`: Semantic candidate search
+- `/api/candidate-search/engage`: Candidate engagement and email generation
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🤝 Contributing
 
-## What technologies are used for this project?
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This project is built with:
+## 📄 License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## How can I deploy this project?
+## 🙏 Acknowledgments
 
-Simply open [Lovable](https://lovable.dev/projects/e429f654-6c22-4bd7-a1fa-a6e8b3de265f) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Google Gemini Pro for AI capabilities
+- ChromaDB for vector storage
+- The open-source community for various tools and libraries
