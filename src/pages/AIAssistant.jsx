@@ -1,22 +1,25 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SendHorizontal, Loader2, Bot, User, Brain, Sparkles, Cpu } from "lucide-react";
+import { SendHorizontal, Loader2, Bot, User, Brain, Sparkles, Cpu, Search } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SearchHeader from "@/components/search/SearchHeader";
+import { API_ENDPOINTS } from "@/lib/api/config";
+import { toast } from "sonner";
 
 const AIAssistant = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
       id: "welcome",
-      sender: "bot",
-      text: "Hello! I'm RAYA, your superintelligent HR assistant. Ask me anything about candidates, recruitment, or HR processes.",
+      role: "assistant",
+      content: "Hello! I'm RAYA, your superintelligent HR assistant. Ask me anything about candidates, recruitment, or HR processes.",
       timestamp: new Date(),
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [isWebSearching, setIsWebSearching] = useState(false);
   const messagesEndRef = useRef(null);
 
   // Scroll to bottom of messages
@@ -28,43 +31,126 @@ const AIAssistant = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = (e) => {
+  // Detect if the user is asking for latest or recent information
+  const isAskingForLatestInfo = (text) => {
+    const latestInfoKeywords = [
+      "latest", "recent", "current", "new", "up to date", "today", "this week",
+      "this month", "this year", "trends", "news", "update"
+    ];
+    
+    return latestInfoKeywords.some(keyword => 
+      text.toLowerCase().includes(keyword)
+    );
+  };
+
+  const handleSendMessage = async (e) => {
     e?.preventDefault();
     if (!input.trim()) return;
 
     // Add user message
     const userMessage = {
       id: Date.now().toString(),
-      sender: "user",
-      text: input,
+      role: "user",
+      content: input,
       timestamp: new Date(),
     };
-    setMessages([...messages, userMessage]);
+    setMessages(prevMessages => [...prevMessages, userMessage]);
     setInput("");
     setIsTyping(true);
 
-    // Simulate AI response after a delay
-    setTimeout(() => {
-      const botResponses = [
-        "I've analyzed the candidate profiles and found 3 potential matches for the Frontend Developer position. Would you like me to summarize their key qualifications?",
-        "Based on recent hiring trends, technical candidates with React experience are receiving multiple offers. I recommend expediting your interview process.",
-        "Looking at the job description, I suggest emphasizing collaborative skills. Our data shows this increases application rates by 15% for senior roles.",
-        "The candidate has 5 years of relevant experience and a strong portfolio. Their skills closely match your requirements, particularly in UI/UX design.",
-        "I can help you draft a personalized outreach email to this candidate based on their background and interests.",
-      ];
+    // Check if the user is asking for latest information
+    const needsWebSearch = isAskingForLatestInfo(input);
+    let webSearchQuery = null;
+    
+    if (needsWebSearch) {
+      setIsWebSearching(true);
+      // Extract a search query from the user's message
+      webSearchQuery = input;
       
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+      // Add a message indicating web search is happening
+      setMessages(prevMessages => [
+        ...prevMessages, 
+        {
+          id: "search-notification",
+          role: "system",
+          content: "Web search agent triggered",
+          timestamp: new Date(),
+          isSearchNotification: true
+        }
+      ]);
+    }
+
+    try {
+      // Prepare the chat history for the API
+      const chatHistory = messages.filter(msg => msg.role === "user" || msg.role === "assistant")
+        .map(({ role, content }) => ({ role, content }));
+
+      // Add the current user message
+      chatHistory.push({ role: "user", content: input });
+
+      // Call the backend API
+      const response = await fetch(API_ENDPOINTS.assistant.chat, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: chatHistory,
+          use_web_search: needsWebSearch,
+          search_query: webSearchQuery
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get response from AI assistant");
+      }
+
+      const data = await response.json();
       
-      const botMessage = {
-        id: (Date.now() + 1).toString(),
-        sender: "bot",
-        text: randomResponse,
-        timestamp: new Date(),
-      };
+      // Remove the search notification if it exists
+      if (needsWebSearch) {
+        setMessages(prevMessages => 
+          prevMessages.filter(msg => msg.id !== "search-notification")
+        );
+        setIsWebSearching(false);
+      }
+
+      // Add the AI response
+      setMessages(prevMessages => [
+        ...prevMessages,
+        {
+          id: Date.now().toString(),
+          ...data.message,
+          timestamp: new Date(),
+          webSearchUsed: data.web_search_used
+        },
+      ]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Error getting response from AI assistant");
       
-      setMessages(prev => [...prev, botMessage]);
+      // Remove the search notification if it exists
+      if (needsWebSearch) {
+        setMessages(prevMessages => 
+          prevMessages.filter(msg => msg.id !== "search-notification")
+        );
+        setIsWebSearching(false);
+      }
+      
+      // Add error message
+      setMessages(prevMessages => [
+        ...prevMessages,
+        {
+          id: Date.now().toString(),
+          role: "assistant",
+          content: "I'm sorry, I encountered an error while processing your request. Please try again later.",
+          timestamp: new Date(),
+          isError: true
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -116,46 +202,65 @@ const AIAssistant = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                   className={`flex ${
-                    message.sender === "user" ? "justify-end" : "justify-start"
+                    message.role === "user" ? "justify-end" : 
+                    message.isSearchNotification ? "justify-center" : "justify-start"
                   }`}
                 >
-                  <div
-                    className={`flex items-start space-x-2 max-w-[80%] ${
-                      message.sender === "user" ? "flex-row-reverse space-x-reverse" : "flex-row"
-                    }`}
-                  >
+                  {message.isSearchNotification ? (
+                    <div className="px-3 py-2 bg-raya-blue/20 rounded-full flex items-center space-x-2 border border-raya-blue/30">
+                      <Search className="h-4 w-4 text-raya-blue animate-pulse" />
+                      <span className="text-xs text-raya-blue">{message.content}</span>
+                    </div>
+                  ) : (
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                        message.sender === "user" 
-                          ? "bg-raya-purple/20 border border-raya-purple/30" 
-                          : "bg-raya-blue/10 border border-raya-blue/30"
+                      className={`flex items-start space-x-2 max-w-[80%] ${
+                        message.role === "user" ? "flex-row-reverse space-x-reverse" : "flex-row"
                       }`}
                     >
-                      {message.sender === "user" ? (
-                        <User className="w-4 h-4" />
-                      ) : (
-                        <Brain className="w-4 h-4 text-raya-blue" />
-                      )}
+                      <div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                          message.role === "user" 
+                            ? "bg-raya-purple/20 border border-raya-purple/30" 
+                            : "bg-raya-blue/10 border border-raya-blue/30"
+                        }`}
+                      >
+                        {message.role === "user" ? (
+                          <User className="w-4 h-4" />
+                        ) : (
+                          <Avatar className="w-full h-full">
+                            <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FEFD9A&size=32" alt="RAYA" />
+                            <AvatarFallback className="bg-raya-dark text-raya-yellow text-[10px]">RA</AvatarFallback>
+                          </Avatar>
+                        )}
+                      </div>
+                      <div
+                        className={`p-3 rounded-2xl ${
+                          message.role === "user"
+                            ? "bg-gradient-to-r from-raya-purple/80 to-raya-neon-purple/70 text-white rounded-tr-none shadow-[0_0_8px_rgba(192,132,252,0.3)]"
+                            : "bg-gradient-to-r from-raya-blue/30 to-raya-blue/10 rounded-tl-none shadow-[0_0_8px_rgba(0,255,255,0.2)]"
+                        }`}
+                      >
+                        <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                        
+                        {message.webSearchUsed && (
+                          <div className="mt-2 pt-2 border-t border-raya-blue/20 flex items-center space-x-1">
+                            <Search className="h-3 w-3 text-raya-blue" />
+                            <span className="text-xs text-raya-blue">Web search used for this response</span>
+                          </div>
+                        )}
+                        
+                        <p className="text-xs opacity-70 mt-1">
+                          {message.timestamp.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </p>
+                      </div>
                     </div>
-                    <div
-                      className={`p-3 rounded-2xl ${
-                        message.sender === "user"
-                          ? "bg-gradient-to-r from-raya-purple/80 to-raya-neon-purple/70 text-white rounded-tr-none shadow-[0_0_8px_rgba(192,132,252,0.3)]"
-                          : "bg-gradient-to-r from-raya-blue/30 to-raya-blue/10 rounded-tl-none shadow-[0_0_8px_rgba(0,255,255,0.2)]"
-                      }`}
-                    >
-                      <p className="text-sm">{message.text}</p>
-                      <p className="text-xs opacity-70 mt-1">
-                        {message.timestamp.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </p>
-                    </div>
-                  </div>
+                  )}
                 </motion.div>
               ))}
-              {isTyping && (
+              {isTyping && !isWebSearching && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -164,7 +269,10 @@ const AIAssistant = () => {
                 >
                   <div className="flex items-start space-x-2 max-w-[80%]">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-raya-blue/10 border border-raya-blue/30">
-                      <Brain className="w-4 h-4 text-raya-blue" />
+                      <Avatar className="w-full h-full">
+                        <AvatarImage src="https://ui-avatars.com/api/?name=RAYA&background=080A12&color=FEFD9A&size=32" alt="RAYA" />
+                        <AvatarFallback className="bg-raya-dark text-raya-yellow text-[10px]">RA</AvatarFallback>
+                      </Avatar>
                     </div>
                     <div className="p-3 rounded-2xl bg-gradient-to-r from-raya-blue/30 to-raya-blue/10 rounded-tl-none">
                       <div className="flex space-x-1">
@@ -207,7 +315,7 @@ const AIAssistant = () => {
               />
               <Button
                 type="submit"
-                className="bg-gradient-to-r from-raya-blue to-raya-purple hover:opacity-90 shadow-[0_0_10px_rgba(0,255,255,0.3)]"
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-medium shadow-lg shadow-cyan-500/20"
                 disabled={!input.trim() || isTyping}
               >
                 {isTyping ? (
